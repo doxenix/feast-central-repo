@@ -35,7 +35,7 @@ jobs:
           feast init -m central_repo       
           mv feast.yaml central_repo/feature_repo/feature_store.yaml
           mv repo.py central_repo/feature_repo/repo.py
-          feast plan
+          cd central_repo/feature_repo; feast plan
 
       # Post a comment on the PR with the results of `feast plan`
       # - name: Create comment
