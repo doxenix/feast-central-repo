@@ -1,0 +1,7 @@
+project: feast_demo_gcp
+provider: gcp
+registry: local
+online_store: null
+offline_store:
+  type: file
+entity_key_serialization_version: 2
