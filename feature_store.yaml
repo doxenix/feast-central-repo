@@ -1,7 +1,8 @@
-project: feast_demo_gcp
+project: remote_repo
 provider: gcp
-registry: local
 online_store: null
-offline_store:
-  type: file
+registry:
+    registry_type: sql
+    path: postgresql://postgres:admin@127.0.0.1:5432/feast
+    cache_ttl_seconds: 60
 entity_key_serialization_version: 2
