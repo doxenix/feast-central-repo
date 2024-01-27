@@ -12,25 +12,28 @@ jobs:
         with:
           python-version: "3.8"
           architecture: x64
-      # - name: Set up Cloud SDK
-      #   uses: google-github-actions/setup-gcloud@v0
-      #   with:
-      #     project_id: ${{ secrets.GCP_PROJECT_ID }}
-      #     service_account_key: ${{ secrets.GCP_SA_KEY }}
-      #     export_default_credentials: true
-      # - name: Use gcloud CLI
-      #   run: gcloud info
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          project_id: fs-course-feast
+          service_account_key: ${{ secrets.SA }}
+          export_default_credentials: true
+      - name: Use gcloud CLI
+        run: gcloud info
+        
+      - name: Set up cloud sql proxy     
+        run: |
+        curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.8.2/cloud-sql-proxy.linux.amd64
+        chmod +x cloud-sql-proxy
+        nohup ./cloud-sql-proxy fs-course-feast:europe-west1:feast-registry
 
       # Run `feast plan`
       - uses: actions/checkout@v2
-      - name: Install feast
-        run: pip install "feast[gcp]"
-      - name: Capture `feast plan` in a variable
-        id: feast_plan
-        # env:
-        #   FEAST_USAGE: "False"
-        #   FEAST_FORCE_USAGE_UUID: None
-        #   IS_TEST: "True"
+      - name: Install python packages
+        run: | 
+          pip install "feast[gcp]"
+          pip install psycopg2-binary
+      - name: feast plan
         run: |
           feast init -m central_repo       
           mv -t central_repo/feature_repo feature_store.yaml repo.py          
