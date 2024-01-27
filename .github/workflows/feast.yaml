@@ -32,11 +32,10 @@ jobs:
         #   FEAST_FORCE_USAGE_UUID: None
         #   IS_TEST: "True"
         run: |
-          feast init -m central_repo
-          ls
-          # rm feature_repo/feature_store.yaml
-          # mv feast.yaml repo.py feature_repo/
-          # feast plan
+          feast init -m central_repo       
+          mv feast.yaml central_repo/feature_repo/feature_store.yaml
+          mv repo.py central_repo/feature_repo/repo.py
+          feast plan
 
       # Post a comment on the PR with the results of `feast plan`
       # - name: Create comment
