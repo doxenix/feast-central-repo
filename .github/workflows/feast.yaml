@@ -33,9 +33,10 @@ jobs:
         #   IS_TEST: "True"
         run: |
           feast init -m central_repo
-          rm feature_repo/feature_store.yaml
-          mv feast.yaml repo.py feature_repo/
-          feast plan
+          ls
+          # rm feature_repo/feature_store.yaml
+          # mv feast.yaml repo.py feature_repo/
+          # feast plan
 
       # Post a comment on the PR with the results of `feast plan`
       # - name: Create comment
