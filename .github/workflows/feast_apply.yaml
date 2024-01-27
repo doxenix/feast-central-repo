@@ -1,0 +1,39 @@
+name: Feast apply (GCP)
+
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  feast_apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: 'actions/checkout@v4'
+      - name: Setup Python
+        id: setup-python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+          architecture: x64
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.SA }}'
+          create_credentials_file: true
+        
+      - name: Set up cloud sql proxy     
+        run: |
+          curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.7.0/cloud-sql-proxy.linux.amd64
+          chmod +x cloud-sql-proxy
+          nohup ./cloud-sql-proxy fs-course-feast:europe-west1:feast-registry &
+
+      - name: Install python packages
+        run: | 
+          pip install "feast[gcp]"
+          pip install psycopg2-binary
+      - name: feast apply
+        run: |
+          feast init -m central_repo       
+          mv -t central_repo/feature_repo feature_store.yaml repo.py          
+          cd central_repo/feature_repo; feast apply
