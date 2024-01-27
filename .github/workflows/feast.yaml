@@ -32,13 +32,16 @@ jobs:
         #   FEAST_FORCE_USAGE_UUID: None
         #   IS_TEST: "True"
         run: |
+          feast init -m central_repo
+          rm feature_repo/feature_store.yaml
+          mv feast.yaml repo.py feature_repo/
           feast plan
 
       # Post a comment on the PR with the results of `feast plan`
-      - name: Create comment
-        uses: peter-evans/create-or-update-comment@v1
-        if: ${{ steps.feast_plan.outputs.body }}
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            ${{ steps.feast_plan.outputs.body }}
+      # - name: Create comment
+      #   uses: peter-evans/create-or-update-comment@v1
+      #   if: ${{ steps.feast_plan.outputs.body }}
+      #   with:
+      #     issue-number: ${{ github.event.pull_request.number }}
+      #     body: |
+      #       ${{ steps.feast_plan.outputs.body }}
