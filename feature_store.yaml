@@ -1,0 +1,8 @@
+project: remote_repo
+provider: gcp
+online_store: null
+registry:
+    registry_type: sql
+    path: postgresql://postgres:admin@127.0.0.1:5432/feast
+    cache_ttl_seconds: 60
+entity_key_serialization_version: 2
