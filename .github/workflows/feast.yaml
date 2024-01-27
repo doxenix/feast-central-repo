@@ -23,9 +23,9 @@ jobs:
         
       - name: Set up cloud sql proxy     
         run: |
-        curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.8.2/cloud-sql-proxy.linux.amd64
-        chmod +x cloud-sql-proxy
-        nohup ./cloud-sql-proxy fs-course-feast:europe-west1:feast-registry
+          curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.7.0/cloud-sql-proxy.linux.amd64
+          chmod +x cloud-sql-proxy
+          nohup ./cloud-sql-proxy fs-course-feast:europe-west1:feast-registry
 
       # Run `feast plan`
       - uses: actions/checkout@v2
