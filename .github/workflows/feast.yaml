@@ -40,8 +40,6 @@ jobs:
           pip install "feast[gcp]"
           pip install psycopg2-binary
       - name: feast plan
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SA }}
         run: |
           feast init -m central_repo       
           mv -t central_repo/feature_repo feature_store.yaml repo.py          
