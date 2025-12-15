@@ -1,0 +1,26 @@
+Blending:
+https://docs.lmcache.ai/kv_cache_optimizations/blending.html
+https://www.reddit.com/r/LocalLLaMA/comments/1lp653l/reuse_nonprefix_kv_cache_and_speed_up_rag_by_3x/
+
+Przykład, że benchmarki LMCache działają pod prefix cache:
+https://docs.lmcache.ai/getting_started/quickstart/offload_kv_cache.html
+
+Przykład anthropic pytanie na końcu daje lepszą odp:
+https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/long-context-tips#essential-tips-for-long-context-prompts
+
+
+https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/
+
+
+
+Dalsze kroki:
+
+- przygotować zmodyfikowany dataset gpt-oss pod prefix cache (+ może warto sprawdzić statystyki tego zbioru - ile jest % promptów z powtarzającymi się prefixami do X tokenów)
+- zrobić testy na zmodyfikowanym zbiorze na samym vllm z włączonym prefix-cache'em
+- potem zrobić testy z LMCache
+- sprawdzić Blending Cache w  LMCache
+- po obiecujących wynikach zwrócić się do Z1 żeby sprawdzili wpływ na jakość prompta Kontekst -> Pytanie (zamiast obecnego Pytanie -> Kontekst )
+
++ na przyszłość:
+- sprawdzić libkę do testów LLMów: https://github.com/kubernetes-sigs/inference-perf
+- sprawdzić czy nie dałoby się reużyć skryptu auto-tune.sh z vllm'a: https://github.com/vllm-project/vllm/blob/main/benchmarks/auto_tune/auto_tune.sh
