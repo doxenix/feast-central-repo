@@ -18,3 +18,13 @@ def verifyGitLabStatus(projectId, sha, token) {
         }
     }
 }
+
+
+def getLatestSha(projectId, branch, token) {
+    // Zapytanie do API o konkretną gałąź
+    def cmd = "curl -s --header 'PRIVATE-TOKEN: ${token}' 'https://gitlab.com/api/v4/projects/${projectId}/repository/branches/${branch}'"
+    def response = sh(script: cmd, returnStdout: true).trim()
+    
+    // Wyciągnięcie SHA (pole "id" wewnątrz obiektu "commit")
+    return response.split('"id":"')[1].split('"')[0]
+}
