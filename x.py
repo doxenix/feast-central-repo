@@ -1,3 +1,5 @@
+            } else if (pipelineStatus == "failed" || pipelineStatus == "canceled" || pipelineStatus == "skipped") {
+
 def verifyGitLabStatus(projectId, sha, token) {
     // Pętla będzie trwać, dopóki status to 'running' lub 'pending'
     timeout(time: 10, unit: 'MINUTES') { // Zabezpieczenie przed nieskończonym czekaniem
